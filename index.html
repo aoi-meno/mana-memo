@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <script src="components/loader.js"></script>
+  <script src="components/vue/dist/vue.min.js"></script>
+  <script src="lib/onsenui/js/onsenui.min.js"></script>
+  <script src="js/vue-onsenui.js"></script>
+  <script src="js/vue-onsenui.min.js"></script>
+　<script src="js/kuromoji.js"></script>
+  <link rel="stylesheet" href="components/loader.css">
+  <link rel="stylesheet" href="lib/onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  
+<! -- メイン -->
+<template id="main">
+    <v-ons-page>
+      <v-ons-toolbar>
+        <div class="center">{{ title }}</div>
+      </v-ons-toolbar>
+      <v-ons-tabbar swipeable position="auto":tabs="tabs":visible="true":index.sync="activeIndex">
+    </v-ons-tabbar>
+  </v-ons-page>
+</template>
+
+<! -- メモタブ -->
+<template id="editer">
+  <v-ons-page>
+      <div v-show="isLoading">
+      <div v-text="message"></div>
+      <v-ons-icon size="30px" spin icon="md-spinner"></v-ons-icon>
+      </div>
+      <form v-show="!isLoading">
+      <v-ons-list>
+      <v-ons-list-header>メモのタイトル</v-ons-list-header>
+      <v-ons-list-item>
+          <v-ons-input id="title_input" placeholder="タイトルを入力してください" float
+          v-model="mTitle"></v-ons-input>
+      </v-ons-list-item>
+      <v-ons-list-header>メモの内容</v-ons-list-header>
+      </v-ons-list>
+      <div class="white_back">
+      <textarea id="text_input" placeholder="テキストを入力してください" v-model="mText" style="border:none;"> 
+      </textarea>
+      </div>
+      <v-ons-button id="send_button" modifier="cta">登録</v-ons-button>
+      <v-ons-button id="clear_button" modifier="cta">リセット</v-ons-button>
+      </form>
+  </v-ons-page>
+</template>
+
+<! -- 分析タブ -->
+<template id="analysis">
+  <v-ons-page>
+        <v-ons-list-header>分析結果</v-ons-list-header>
+        <v-ons-list v-show="!tokens.length">
+            <v-ons-list-item modifier="longdivider">No result of analysis.</v-ons-list-item>
+        </v-ons-list>
+      <div class="white_back" v-show="token_exs.length">
+      <table v-show="token_exs.length" width="100%" style="border:1px; text-align:center;">
+        <tbody>
+          <tr v-for="token_ex in token_exs">
+            <td style="border: solid 1px #000000;width:40%;">{{token_ex}}</td>
+            
+            <td>
+              <v-ons-button id="link_button" modifier="cta">
+                <a :href="'https://ja.m.wikipedia.org/wiki/' + token_ex" target="_blank">{{button_label_a}}</a>
+              </v-ons-button>   
+            </td>
+            
+            <td>
+              <v-ons-button id="link_button" modifier="cta">
+                <a :href="'https://dictionary.goo.ne.jp/srch/all/' + token_ex + '/m0u/'" target="_blank">{{button_label_b}}</a>
+              </v-ons-button>  
+            </td>
+            
+            
+            <td>
+              <v-ons-button id="link_button" modifier="cta">
+                <a :href="setting_dic_url + token_ex" target="_blank">{{setting_dic_name}}</a>
+              </v-ons-button>    
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+</v-ons-page>
+</template>
+
+<! -- メモ一覧タブ -->
+<template id="mlist">
+  <v-ons-page>
+        <v-ons-list-header>メモ一覧</v-ons-list-header>
+        <v-ons-list v-show="!memoList.length">
+            <v-ons-list-item modifier="longdivider">
+            　No result of analysis.
+            </v-ons-list-item>
+        </v-ons-list>
+        <v-ons-list v-show="memoList.length">
+            <v-ons-list-item modifier="longdivider">
+            　No result of analysis.　    
+            </v-ons-list-item>
+        </v-ons-list>
+  </v-ons-page>
+</template>
+
+<! -- メモ一覧タブ -->
+<template id="search"></template>
+
+<! -- 設定タブ -->
+<template id="settings">
+  <v-ons-page>
+    <v-ons-list>
+      <v-ons-list-header>
+        指定検索・辞書サイト名(表示名)
+      </v-ons-list-header>
+      <v-ons-list-item>
+        <div class="center">
+          <v-ons-input float v-model="setting_dic_name" style="width:100%;">
+          </v-ons-input>
+        </div>
+      </v-ons-list-item>
+      <v-ons-list-header>
+        指定検索・辞書サイトURL(キーワード前)
+      </v-ons-list-header>
+      <v-ons-list-item>
+        <div class="center">
+          <v-ons-input float v-model="setting_dic_url" style="width:100%;">
+          </v-ons-input>
+        </div>
+      </v-ons-list-item>
+    </v-ons-list>
+  </v-ons-page>
+</template>
+
+<! -- レンダリング -->
+<div id="app"></div>
+
+<script src="js/app-main.js"></script>
+
+</body>
+</html>
+

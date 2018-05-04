@@ -1,0 +1,43 @@
+/*基本設定*/
+.white_back{
+  border-top:solid 1px #CCCCCC;
+  border-bottom:solid 1px #CCCCCC;
+  background-color:#FFFFFF;
+  width:100%;
+}
+
+
+/*ボタン設定*/
+#send_button{
+    float: right;
+    font-size: 1em;
+    margin: 5px 10px 5px 10px;
+}
+#clear_button{
+    float: right;
+    font-size: 0.8em;
+    margin: 5px 10px 5px 10px;
+}
+#logout_button{
+    float: right;
+}
+#link_button{
+    float: right;
+    font-size: 0.8em;
+    min-width:40px;
+    margin:0px;
+}
+
+/*エディター設定*/
+#title_input{
+    font-size: 1em;
+    min-width:300px;
+}
+#text_input{
+    width:95%;
+    height:300px;
+    resize: vertical;
+    font-size: 1em;
+    padding-left:12px;
+    padding-top:14px;
+}
