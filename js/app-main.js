@@ -12,7 +12,7 @@ var data = {
   token_exs:[],
   filter_basic:"",
   filter_pos:"名詞",
-  filter_length: 0,
+  filter_length: 1,
   memoList:[],
   isLoading: true,
   message: "機能をロードしています ...",
