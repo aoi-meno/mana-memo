@@ -48,7 +48,7 @@
       <v-ons-list-header>メモの内容</v-ons-list-header>
       </v-ons-list>
       <div class="white_back">
-      <textarea id="text_input" placeholder="テキストを入力してください" v-model="mText" style="border:none;"> 
+      <textarea id="text_input" placeholder="テキストを入力してください" v-model="mText" style="border:none;">
       </textarea>
       </div>
       <v-ons-button id="send_button" modifier="cta">登録</v-ons-button>
@@ -69,24 +69,24 @@
         <tbody>
           <tr v-for="token_ex in token_exs">
             <td style="border: solid 1px #000000;width:40%;">{{token_ex}}</td>
-            
+
             <td>
               <v-ons-button id="link_button" modifier="cta">
-                <a :href="'https://ja.m.wikipedia.org/wiki/' + token_ex" target="_blank">{{button_label_a}}</a>
-              </v-ons-button>   
+                <a :href="{{search_url_a}} + token_ex" target="_blank">{{search_b_label_a}}</a>
+              </v-ons-button>
             </td>
-            
+
             <td>
               <v-ons-button id="link_button" modifier="cta">
-                <a :href="'https://dictionary.goo.ne.jp/srch/all/' + token_ex + '/m0u/'" target="_blank">{{button_label_b}}</a>
-              </v-ons-button>  
+                <a :href="{{search_url_b}}' + token_ex + {{search_url_b_s}}" target="_blank">{{search_b_label_b}}</a>
+              </v-ons-button>
             </td>
-            
-            
+
+
             <td>
               <v-ons-button id="link_button" modifier="cta">
                 <a :href="setting_dic_url + token_ex" target="_blank">{{setting_dic_name}}</a>
-              </v-ons-button>    
+              </v-ons-button>
             </td>
           </tr>
         </tbody>
@@ -106,7 +106,7 @@
         </v-ons-list>
         <v-ons-list v-show="memoList.length">
             <v-ons-list-item modifier="longdivider">
-            　No result of analysis.　    
+            　No result of analysis.　
             </v-ons-list-item>
         </v-ons-list>
   </v-ons-page>
@@ -148,4 +148,3 @@
 
 </body>
 </html>
-
