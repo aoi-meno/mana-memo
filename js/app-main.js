@@ -205,28 +205,28 @@ jQuery(document).ready(function ($) {
 });
 // リセットボタン押されたらメモ・分析内容をリセット
 document.querySelector("#clear_button").onclick = function () {
-    data.mText = "";
-    data.tokens = [];
-    data.tokens_ex = [];
-    data.token_exs = [];
-  },
-  // 登録ボタン押されたらDB or 一覧に追加
-  document.querySelector("#send_button").onclick = function () {
-    saveText();
-  },
-  // Load and prepare tokenizer
-  kuromoji.builder({
-    dicPath: "./dict/"
-  }).build(function (error, _tokenizer) {
-    if (error != null) {
-      console.log(error);
-    }
-    tokenizer = _tokenizer;
-    data.message = "Ready";
-    data.mText = "";
-    data.isLoading = false;
-    //デバッグ
-    //console.log(data.tokens);
-    //console.log(data.isLoading);
-    //console.log(data.inputText);
-  });
+  data.mText = "";
+  data.tokens = [];
+  data.tokens_ex = [];
+  data.token_exs = [];
+},
+// 登録ボタン押されたらDB or 一覧に追加
+document.querySelector("#send_button").onclick = function () {
+  saveText();
+},
+// Load and prepare tokenizer
+kuromoji.builder({
+  dicPath: "./dict/"
+}).build(function (error, _tokenizer) {
+  if (error != null) {
+    console.log(error);
+  }
+  tokenizer = _tokenizer;
+  data.message = "Ready";
+  data.mText = "";
+  data.isLoading = false;
+  //デバッグ
+  //console.log(data.tokens);
+  //console.log(data.isLoading);
+  //console.log(data.inputText);
+});
